@@ -19,6 +19,7 @@
     "@mui/lab": "^5.0.0-alpha.173",
     "@mui/material": "^5.16.6",
     "@mui/system": "^5.16.6",
+    "@vercel/postgres": "^0.10.0",
     "axios": "^1.7.3",
     "formik": "^2.4.6",
     "framer-motion": "^11.3.21",
