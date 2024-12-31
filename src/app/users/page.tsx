@@ -18,8 +18,8 @@ export default async function UsersPage() {
   return (
     <div>
       <div className="flex m-2 justify-between items-center">
-        <h1 className="text-xl font-bold">Snippets</h1>
-        <Link href="/snippets/new" className="bg-blue-200 p-2 border rounded">
+        <h1 className="text-xl font-bold">Users</h1>
+        <Link href="/Users/new" className="bg-blue-200 p-2 border rounded">
           New
         </Link>
       </div>
