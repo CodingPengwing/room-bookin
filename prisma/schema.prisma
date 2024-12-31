@@ -12,18 +12,24 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid()) @db.Uuid
-  role      Role      @default(USER)
+  id        String     @id @default(uuid()) @db.Uuid
+  role      UserRole   @default(USER)
   name      String
-  email     String    @unique
+  email     String     @unique
   password  String
   booking   Booking[]
-  createdAt DateTime  @default(now())
+  createdAt DateTime   @default(now())
+  status    UserStatus @default(ACTIVATED)
 }
 
-enum Role {
+enum UserRole {
   USER
   ADMIN
+}
+
+enum UserStatus {
+  ACTIVATED
+  DEACTIVATED
 }
 
 model Room {
