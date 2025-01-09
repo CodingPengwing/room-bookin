@@ -3,60 +3,49 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
-import { Prisma, User } from "@prisma/client";
-import { ActionState, CreateUserSchema, UserSchema } from "./types";
-
-export type CreateUserData = Pick<User, "name" | "email" | "password" | "role">;
-
-export type UpdateUserData = Pick<User, "id"> &
-  Partial<Pick<User, "name" | "email" | "password" | "role">>;
+import { ActionState, CreateUserInput, CreateUserSchema, UpdateUserInput, UpdateUserSchema } from "./types";
 
 export async function createUser(
   _: ActionState,
-  data: CreateUserData
+  data: CreateUserInput
 ): Promise<ActionState> {
   // Check the user's inputs and make sure they're valid
-  const { name, email, password, role } = data;
+  const parsedData = CreateUserSchema.safeParse(data);
 
-  try {
-    CreateUserSchema.parse(data); // Validates the object
-  } catch (error: any) {
-    return { errorMessage: error.errors[0] }; // Outputs validation errors
+  if (!parsedData.success) {
+    return { errorMessage: JSON.stringify (parsedData.error.errors) };
   }
 
   // Create a new record in the database
   await db.user.create({
-    data: {
-      name,
-      email,
-      password,
-    },
+    data: parsedData.data,
   });
 
   // Redirect the user back to the root route
-  revalidatePath(`/`);
-  redirect("/");
+  revalidatePath(`/users`);
+  redirect("/users");
 }
 
 export async function editUser(
   _: ActionState,
-  data: UpdateUserData
+  data: UpdateUserInput
 ): Promise<ActionState> {
-  // Check the user's inputs and make sure they're valid
-  const { id, name, email, password, role } = data;
+  const { id } = data;
 
-  const newState = validateUserData(data);
-  if (newState?.errorMessage) {
-    return newState;
+  // Check the user's inputs and make sure they're valid
+  const parsedData = UpdateUserSchema.safeParse(data);
+
+  if (!parsedData.success) {
+    return { errorMessage: parsedData.error.errors[0].message };
   }
 
-  await db.user.update({ where: { id }, data });
+  await db.user.update({ where: { id }, data: parsedData.data });
   revalidatePath(`/users/${id}`);
   redirect(`/users/${id}`);
 }
 
 export async function deleteUser(id: string) {
   await db.user.delete({ where: { id } });
-  revalidatePath(`/`);
-  redirect(`/`);
+  revalidatePath(`/users`);
+  redirect(`/users`);
 }
