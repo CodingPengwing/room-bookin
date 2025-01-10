@@ -48,11 +48,12 @@ export async function editBooking(
 
   await db.booking.update({ where: { id }, data: parsedData.data });
   revalidatePath(`/bookings`);
-  redirect(`/bookings`);
+  redirect("/bookings");
+  // return { errorMessage: "" };
 }
 
 export async function deleteBooking(id: string) {
   await db.booking.delete({ where: { id } });
   revalidatePath(`/bookings`);
-  redirect(`/bookings`);
+  return { errorMessage: "" };
 }

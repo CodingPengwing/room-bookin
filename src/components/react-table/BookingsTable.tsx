@@ -12,6 +12,7 @@ import { ReactTable } from "./ReactTable";
 import { Booking, Room, User } from "@prisma/client";
 import Link from "next/link";
 import BookingCreateForm from "../forms/BookingCreateForm";
+import BookingEditForm from "../forms/BookingEditForm";
 
 export interface BookingsTableProps {
   bookings: Booking[];
@@ -25,6 +26,11 @@ export default function BookingsTable({
   roomsWithBookings,
 }: BookingsTableProps) {
   const router = useRouter();
+
+  const [modalState, setModalState] = useState(false);
+  const [modalType, setModalType] = useState<"create" | "edit">("create");
+  const [selectedBookingId, setSelectedBookingId] = useState<string>("");
+
   const columns = useMemo<ColumnDef<Booking>[]>(
     () => [
       {
@@ -87,18 +93,17 @@ export default function BookingsTable({
         },
         disableSortBy: true,
         cell: ({ row }) => {
-          const collapseIcon =
-            row.getCanExpand() && row.getIsExpanded() ? (
-              <PlusOutlined style={{ transform: "rotate(45deg)" }} />
-            ) : (
-              <EyeOutlined />
-            );
+          const collapseIcon = <EyeOutlined />;
           return (
             <Tooltip title="View">
               <IconButton
                 sx={{ "&::after": { content: "none" } }}
-                color={row.getIsExpanded() ? "error" : "secondary"}
-                onClick={row.getToggleExpandedHandler()}
+                // color={row.getIsExpanded() ? "error" : "secondary"}
+                onClick={() => {
+                  setModalType("edit");
+                  setSelectedBookingId(row.original.id);
+                  setModalState(true);
+                }}
               >
                 {collapseIcon}
               </IconButton>
@@ -110,11 +115,11 @@ export default function BookingsTable({
     []
   );
 
-  const [modalState, setModalState] = useState(false);
-
   const handleAddEntity = useCallback(() => {
     // router.push(`/bookings/new`);
-    setModalState((prev) => !prev);
+    setModalType("create");
+    setSelectedBookingId("");
+    setModalState(true);
   }, []);
 
   return (
@@ -129,11 +134,24 @@ export default function BookingsTable({
             className="bg-white p-6 rounded-lg w-full max-w-lg"
             onClick={(e) => e.stopPropagation()}
           >
-            <BookingCreateForm
-              users={users}
-              roomsWithBookings={roomsWithBookings}
-              onSubmit={() => setModalState(false)}
-            />
+            {modalType === "create" && (
+              <BookingCreateForm
+                users={users}
+                roomsWithBookings={roomsWithBookings}
+                onSubmit={() => setModalState(false)}
+              />
+            )}
+            {/* {modalType === "edit" && (
+              <BookingEditForm
+                booking={
+                  bookings.find(
+                    (booking) => booking.id === selectedBookingId
+                  ) as Booking
+                }
+                users={users}
+                roomsWithBookings={roomsWithBookings}
+              />
+            )} */}
           </div>
         </div>
       </div>

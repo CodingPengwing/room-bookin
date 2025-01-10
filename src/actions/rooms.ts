@@ -19,7 +19,7 @@ export async function createRoom(
   const parsedData = CreateRoomSchema.safeParse(data);
 
   if (!parsedData.success) {
-    return { errorMessage: JSON.stringify(parsedData.error.errors) };
+    return { errorMessage: parsedData.error.errors[0].message };
   }
 
   // Create a new record in the database
