@@ -1,9 +1,10 @@
 "use client";
 
-import { startTransition } from "react";
+import { startTransition, useMemo } from "react";
 import { createBooking } from "@/actions/bookings";
 import { useFormState } from "react-dom";
 import { Booking, Room, User } from "@prisma/client";
+import React from "react";
 
 interface BookingCreateFormProps {
   users: User[];
@@ -13,7 +14,7 @@ interface BookingCreateFormProps {
 
 export default function BookingCreateForm({
   users,
-  roomsWithBookings: rooms,
+  roomsWithBookings,
   onSubmit,
 }: BookingCreateFormProps) {
   const [formState, createBookingAction] = useFormState(createBooking, {
@@ -32,6 +33,23 @@ export default function BookingCreateForm({
     });
     onSubmit?.();
   }
+
+  const [chosenDate, setChosenDate] = React.useState<Date>(new Date());
+
+  const roomsAvailable = useMemo(
+    () =>
+      roomsWithBookings
+        // Filter out rooms that have bookings on chosen date
+        .filter((room) => {
+          const bookingsOnDate = room.bookings.filter(
+            (booking) =>
+              new Date(booking.date).toISOString().split("T")[0] ===
+              chosenDate.toISOString().split("T")[0]
+          );
+          return bookingsOnDate.length === 0;
+        }),
+    [roomsWithBookings, chosenDate]
+  );
 
   return (
     <form
@@ -52,6 +70,8 @@ export default function BookingCreateForm({
             id="date"
             name="date"
             className="border rounded p-3 mt-1 w-full focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            value={chosenDate.toISOString().split("T")[0]}
+            onChange={(event) => setChosenDate(new Date(event.target.value))}
           />
         </div>
 
@@ -81,14 +101,18 @@ export default function BookingCreateForm({
             name="roomId"
             className="border rounded p-3 mt-1 w-full focus:ring-2 focus:ring-blue-400 focus:outline-none"
           >
-            {rooms.map((room) => (
+            {roomsAvailable.map((room) => (
               <option key={room.id} value={room.id}>
                 {room.name}
               </option>
             ))}
           </select>
+          {roomsAvailable.length === 0 && (
+            <p className="text-red-500 text-sm">
+              No rooms available on chosen date
+            </p>
+          )}
         </div>
-        {/* Prettified Section */}
 
         {formState.errorMessage && (
           <div className="p-3 bg-red-100 border rounded border-red-400 text-red-700 text-sm">
