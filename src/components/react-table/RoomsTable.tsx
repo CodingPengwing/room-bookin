@@ -51,9 +51,9 @@ export default function RoomsTable({ rooms }: RoomsTableProps) {
       },
       {
         header: "Date created",
-        accessorKey: "createdDate",
+        accessorKey: "createdAt",
         cell: ({ getValue }) => (
-          <Typography variant="subtitle1">
+          <Typography>
             {new Date(getValue() as string).toLocaleDateString()}
           </Typography>
         ),

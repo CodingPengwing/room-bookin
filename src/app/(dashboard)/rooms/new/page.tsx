@@ -1,32 +1,28 @@
 "use client";
 
 import { startTransition } from "react";
-import { createUser } from "@/actions/users";
+import { createRoom } from "@/actions/rooms";
 import { useFormState } from "react-dom";
-import { UserRole } from "@prisma/client";
 
-export default function UserCreatePage() {
-  const [formState, createUserAction] = useFormState(
-    createUser,
-    { errorMessage: "" }
-  );
+export default function RoomCreatePage() {
+  const [formState, createRoomAction] = useFormState(createRoom, {
+    errorMessage: "",
+  });
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     startTransition(() => {
-      createUserAction({
+      createRoomAction({
         name: formData.get("name") as string,
-        email: formData.get("email") as string,
-        password: formData.get("password") as string,
-        role: formData.get("role") as UserRole,
+        description: formData.get("description") as string,
       });
     });
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1 className="font-bold m-3 text-2xl">Create a User</h1>
+      <h1 className="font-bold m-3 text-2xl">Create a Room</h1>
       <div className="flex flex-col gap-4">
         <div className="flex gap-4">
           <label className="w-20" htmlFor="name">
@@ -36,32 +32,14 @@ export default function UserCreatePage() {
         </div>
 
         <div className="flex gap-4">
-          <label className="w-20" htmlFor="email">
-            Email
+          <label className="w-20" htmlFor="Description">
+            Description
           </label>
-          <input
-            name="email"
+          <textarea
+            name="description"
             className="border rounded p-2 w-full"
-            id="email"
+            id="description"
           />
-        </div>
-
-        <div className="flex gap-4">
-          <label className="w-20" htmlFor="password">
-            Password
-          </label>
-          <input
-            name="password"
-            className="border rounded p-2 w-full"
-            id="password"
-          />
-        </div>
-
-        <div className="flex gap-4">
-          <label className="w-20" htmlFor="role">
-            Role
-          </label>
-          <input name="role" className="border rounded p-2 w-full" id="role" />
         </div>
 
         {formState.errorMessage && (

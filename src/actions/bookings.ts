@@ -29,7 +29,8 @@ export async function createBooking(
 
   // Redirect the booking back to the root route
   revalidatePath(`/bookings`);
-  redirect("/bookings");
+  return { errorMessage: "" };
+  // redirect("/bookings");
 }
 
 export async function editBooking(
