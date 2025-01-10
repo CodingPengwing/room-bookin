@@ -1,6 +1,5 @@
 "use client";
 
-import DashboardLayout from "@/layout";
 import ThemeCustomization from "@/themes";
 import { NextUIProvider } from "@nextui-org/react";
 import { SessionProvider } from "next-auth/react";
@@ -16,7 +15,7 @@ export default function Providers({ children }: ProvidersProps) {
       <ThemeCustomization>
         <Locales>
           <SessionProvider>
-            <DashboardLayout>{children}</DashboardLayout>
+            {children}
           </SessionProvider>
         </Locales>
       </ThemeCustomization>
