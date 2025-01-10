@@ -61,7 +61,11 @@ export default function UserCreatePage() {
           <label className="w-20" htmlFor="role">
             Role
           </label>
-          <input name="role" className="border rounded p-2 w-full" id="role" />
+          <select name="role" className="border rounded p-2 w-full" id="role">
+            <option value="USER">User</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+          {/* <input name="role" className="border rounded p-2 w-full" id="role" /> */}
         </div>
 
         {formState.errorMessage && (
