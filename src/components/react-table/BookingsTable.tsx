@@ -46,7 +46,9 @@ export default function BookingsTable({
           const userId = getValue() as string;
           return (
             <Typography variant="body1">
-              <Link href={`/users/${userId}`}>User name</Link>
+              <Link href={`/users/${userId}`}>
+                {users.find((user) => user.id === userId)?.name}
+              </Link>
             </Typography>
           );
         },
@@ -61,7 +63,9 @@ export default function BookingsTable({
           const roomId = getValue() as string;
           return (
             <Typography variant="body1">
-              <Link href={`/rooms/${roomId}`}>Room name</Link>
+              <Link href={`/rooms/${roomId}`}>
+                {roomsWithBookings.find((room) => room.id === roomId)?.name}
+              </Link>
             </Typography>
           );
         },
