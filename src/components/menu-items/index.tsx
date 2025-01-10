@@ -5,11 +5,12 @@ import pages from "./pages";
 
 // types
 import { NavItemType } from "@/types/menu";
+import { bookingsNav, roomsNav, usersNav } from "./main";
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems: { items: NavItemType[] } = {
-  items: [samplePage, pages, other],
+  items: [bookingsNav, roomsNav, usersNav, pages, other],
 };
 
 export default menuItems;

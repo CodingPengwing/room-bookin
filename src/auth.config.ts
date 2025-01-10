@@ -7,6 +7,32 @@ import { Prisma, User } from "@prisma/client";
 
 export const authConfig: NextAuthOptions = {
   callbacks: {
+    session: ({ session, token }) => {
+      console.log("Session Callback", { session, token });
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          randomKey: token.randomKey,
+        },
+      };
+    },
+
+    jwt: ({ token, user }) => {
+      console.log("JWT Callback", { token, user });
+      if (user) {
+        const u = user as unknown as any;
+        return {
+          ...token,
+          id: u.id,
+          randomKey: u.randomKey,
+          role: u.role,
+        };
+      }
+      return token;
+    },
+
     async redirect({ url, baseUrl }) {
       console.log(url);
       console.log(baseUrl);
