@@ -1,15 +1,12 @@
 "use client";
 
-import { Fragment, useMemo, useState } from "react";
-// next
-import { useRouter } from "next/navigation";
+import { Fragment, useCallback, useState } from "react";
 
 // material-ui
 import { alpha, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Table from "@mui/material/Table";
@@ -18,11 +15,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
 
-// third-party
-import { NumericFormat } from "react-number-format";
 import {
   ColumnDef,
   HeaderGroup,
@@ -43,45 +36,17 @@ import { rankItem } from "@tanstack/match-sorter-utils";
 // project-import
 import ScrollX from "@/components/ScrollX";
 import MainCard from "@/components/MainCard";
-import Avatar from "@/components/@extended/Avatar";
-import IconButton from "@/components/@extended/IconButton";
-// import EmptyReactTable from "@/components/tables/react-table/empty";
 
 import {
   CSVExport,
   DebouncedInput,
   HeaderSort,
-  IndeterminateCheckbox,
   RowSelection,
   SelectColumnSorting,
   TablePagination,
 } from "./utils";
 
-// import { useGetProducts } from 'api/products';
 import ProductView from "./ProductView";
-
-export type Products = {
-  id: string | number;
-  image: string;
-  name: string;
-  brand: string;
-  offer?: string;
-  description?: string;
-  about?: string;
-  quantity?: number;
-  rating?: number;
-  discount?: number;
-  salePrice?: number;
-  offerPrice?: number;
-  gender?: string;
-  categories?: string[];
-  colors?: string[];
-  popularity?: number;
-  date?: number;
-  created: Date;
-  isStock?: boolean;
-  new?: number;
-};
 
 export interface LabelKeyObject {
   label: string;
@@ -89,33 +54,35 @@ export interface LabelKeyObject {
 }
 
 // assets
-import EyeOutlined from "@ant-design/icons/EyeOutlined";
 import PlusOutlined from "@ant-design/icons/PlusOutlined";
 
-export const fuzzyFilter: FilterFn<Products> = (
-  row,
-  columnId,
-  value,
-  addMeta
-) => {
-  // rank the item
-  const itemRank = rankItem(row.getValue(columnId), value);
-
-  // store the ranking info
-  addMeta(itemRank);
-
-  // return if the item should be filtered in/out
-  return itemRank.passed;
-};
-
-interface Props {
-  data: Products[];
-  columns: ColumnDef<Products>[];
+interface Props<T extends object> {
+  entityName: string;
+  data: T[];
+  columns: ColumnDef<T>[];
+  handleAddEntity?: () => void;
 }
 
 // ==============================|| REACT TABLE - LIST ||============================== //
 
-function ReactTable({ data, columns }: Props) {
+export function ReactTable<T extends object>({
+  data,
+  columns,
+  entityName,
+  handleAddEntity,
+}: Props<T>) {
+  const fuzzyFilter: FilterFn<T> = useCallback(
+    (row, columnId, value, addMeta) => {
+      // rank the item
+      const itemRank = rankItem(row.getValue(columnId), value);
+      // store the ranking info
+      addMeta(itemRank);
+      // return if the item should be filtered in/out
+      return itemRank.passed;
+    },
+    []
+  );
+
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -163,12 +130,6 @@ function ReactTable({ data, columns }: Props) {
       })
   );
 
-  const router = useRouter();
-
-  const handleAddProduct = () => {
-    router.push(`/apps/e-commerce/add-product`);
-  };
-
   return (
     <MainCard content={false}>
       <Stack
@@ -192,14 +153,16 @@ function ReactTable({ data, columns }: Props) {
               setSorting,
             }}
           />
-          <Button
-            variant="contained"
-            sx={{ textWrap: "nowrap" }}
-            startIcon={<PlusOutlined />}
-            onClick={handleAddProduct}
-          >
-            Add Product
-          </Button>
+          {handleAddEntity && (
+            <Button
+              variant="contained"
+              sx={{ textWrap: "nowrap" }}
+              startIcon={<PlusOutlined />}
+              onClick={handleAddEntity}
+            >
+              Add {entityName}
+            </Button>
+          )}
           <CSVExport
             {...{
               data:
@@ -210,7 +173,7 @@ function ReactTable({ data, columns }: Props) {
                       .getSelectedRowModel()
                       .flatRows.map((row) => row.original),
               headers,
-              filename: "product-list.csv",
+              filename: `${entityName}-list.csv`,
             }}
           />
         </Stack>
@@ -321,156 +284,4 @@ function ReactTable({ data, columns }: Props) {
       </ScrollX>
     </MainCard>
   );
-}
-
-// ==============================|| PRODUCT LIST ||============================== //
-
-export default function ListTable() {
-  //   const { productsLoading, products } = useGetProducts();
-  const products: Products[] = [];
-  const productsLoading = false;
-
-  const columns = useMemo<ColumnDef<Products>[]>(
-    () => [
-      {
-        id: "select",
-        header: ({ table }) => (
-          <IndeterminateCheckbox
-            {...{
-              checked: table.getIsAllRowsSelected(),
-              indeterminate: table.getIsSomeRowsSelected(),
-              onChange: table.getToggleAllRowsSelectedHandler(),
-            }}
-          />
-        ),
-        cell: ({ row }) => (
-          <IndeterminateCheckbox
-            {...{
-              checked: row.getIsSelected(),
-              disabled: !row.getCanSelect(),
-              indeterminate: row.getIsSomeSelected(),
-              onChange: row.getToggleSelectedHandler(),
-            }}
-          />
-        ),
-      },
-      {
-        header: "#",
-        accessorKey: "id",
-        meta: {
-          className: "cell-center",
-        },
-      },
-      {
-        header: "Product Detail",
-        accessorKey: "name",
-        cell: ({ row, getValue }) => (
-          <Stack direction="row" spacing={1.5} alignItems="center">
-            <Avatar
-              variant="rounded"
-              alt={getValue() as string}
-              color="secondary"
-              size="sm"
-              src={`/assets/images/e-commerce/thumbs/${!row.original.image ? "prod-11.png" : row.original.image}`}
-            />
-            <Stack spacing={0}>
-              <Typography variant="subtitle1">
-                {getValue() as string}
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                {row.original.description}
-              </Typography>
-            </Stack>
-          </Stack>
-        ),
-      },
-      {
-        header: "Categories",
-        accessorKey: "categories",
-        cell: ({ row }) => {
-          return row.original.categories ? (
-            <Stack direction="row" spacing={0.25}>
-              {row.original?.categories.map((item: string, index: number) => (
-                <Typography
-                  variant="h6"
-                  key={index}
-                  sx={{ textTransform: "capitalize" }}
-                >
-                  {item}
-                  {row.original.categories!.length > index + 1 ? "," : ""}
-                </Typography>
-              ))}
-            </Stack>
-          ) : (
-            <Typography variant="h6">-</Typography>
-          );
-        },
-      },
-      {
-        header: "Price",
-        accessorKey: "offerPrice",
-        cell: ({ getValue }) => (
-          <NumericFormat
-            value={getValue() as number}
-            displayType="text"
-            thousandSeparator
-            prefix="$"
-          />
-        ),
-        meta: {
-          className: "cell-right",
-        },
-      },
-      {
-        header: "Qty",
-        accessorKey: "quantity",
-        meta: {
-          className: "cell-right",
-        },
-      },
-      {
-        header: "Status",
-        accessorKey: "isStock",
-        cell: ({ getValue }) => (
-          <Chip
-            color={getValue() ? "success" : "error"}
-            label={getValue() ? "In Stock" : "Out of Stock"}
-            size="small"
-            variant="light"
-          />
-        ),
-      },
-      {
-        header: "Actions",
-        meta: {
-          className: "cell-center",
-        },
-        disableSortBy: true,
-        cell: ({ row }) => {
-          const collapseIcon =
-            row.getCanExpand() && row.getIsExpanded() ? (
-              <PlusOutlined style={{ transform: "rotate(45deg)" }} />
-            ) : (
-              <EyeOutlined />
-            );
-          return (
-            <Tooltip title="View">
-              <IconButton
-                sx={{ "&::after": { content: "none" } }}
-                color={row.getIsExpanded() ? "error" : "secondary"}
-                onClick={row.getToggleExpandedHandler()}
-              >
-                {collapseIcon}
-              </IconButton>
-            </Tooltip>
-          );
-        },
-      },
-    ],
-    []
-  );
-
-  //   if (productsLoading) return <EmptyReactTable />;
-
-  return <ReactTable {...{ data: products, columns }} />;
 }

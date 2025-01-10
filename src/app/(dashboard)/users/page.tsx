@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { db } from "@/db";
+import UsersTable from "@/components/react-table/UsersTable";
 
 export default async function UsersPage() {
   const users = await db.user.findMany();
@@ -17,13 +18,8 @@ export default async function UsersPage() {
 
   return (
     <div>
-      <div className="flex m-2 justify-between items-center">
-        <h1 className="text-xl font-bold">Users</h1>
-        <Link href="/users/new" className="bg-blue-200 p-2 border rounded">
-          New
-        </Link>
-      </div>
-      <div className="flex flex-col gap-2">{renderedUsers}</div>
+      <h1>Users Page</h1>
+      <UsersTable users={users} />
     </div>
   );
 }
