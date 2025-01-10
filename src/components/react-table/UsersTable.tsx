@@ -71,6 +71,7 @@ export default function UsersTable({ users }: UsersTableProps) {
         },
         disableSortBy: true,
         cell: ({ row }) => {
+          const userId = row.original.id;
           const collapseIcon =
             row.getCanExpand() && row.getIsExpanded() ? (
               <PlusOutlined style={{ transform: "rotate(45deg)" }} />
@@ -81,8 +82,8 @@ export default function UsersTable({ users }: UsersTableProps) {
             <Tooltip title="View">
               <IconButton
                 sx={{ "&::after": { content: "none" } }}
-                color={row.getIsExpanded() ? "error" : "secondary"}
-                onClick={row.getToggleExpandedHandler()}
+                // color={row.getIsExpanded() ? "error" : "secondary"}
+                onClick={() => router.push(`/users/${userId}`)}
               >
                 {collapseIcon}
               </IconButton>

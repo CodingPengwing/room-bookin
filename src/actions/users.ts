@@ -3,7 +3,13 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
-import { ActionState, CreateUserInput, CreateUserSchema, UpdateUserInput, UpdateUserSchema } from "./types";
+import {
+  ActionState,
+  CreateUserInput,
+  CreateUserSchema,
+  UpdateUserInput,
+  UpdateUserSchema,
+} from "./types";
 
 export async function createUser(
   _: ActionState,
@@ -13,7 +19,7 @@ export async function createUser(
   const parsedData = CreateUserSchema.safeParse(data);
 
   if (!parsedData.success) {
-    return { errorMessage: JSON.stringify (parsedData.error.errors) };
+    return { errorMessage: JSON.stringify(parsedData.error.errors) };
   }
 
   // Create a new record in the database
@@ -36,7 +42,10 @@ export async function editUser(
   const parsedData = UpdateUserSchema.safeParse(data);
 
   if (!parsedData.success) {
-    return { errorMessage: parsedData.error.errors[0].message };
+    console.log(parsedData.error.errors);
+    const field = parsedData.error.errors[0].path[0];
+    const message = parsedData.error.errors[0].message;
+    return { errorMessage: `Bad input for field ${field}: ${message}` };
   }
 
   await db.user.update({ where: { id }, data: parsedData.data });

@@ -1,11 +1,12 @@
 "use client";
+
 import { startTransition } from "react";
 import { createUser } from "@/actions/users";
 import { useFormState } from "react-dom";
 import { UserRole } from "@prisma/client";
 
-export default function SnippetCreatePage() {
-  const [formState, createSnippetAction] = useFormState(
+export default function UserCreatePage() {
+  const [formState, createUserAction] = useFormState(
     createUser,
     { errorMessage: "" }
   );
@@ -14,7 +15,7 @@ export default function SnippetCreatePage() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     startTransition(() => {
-      createSnippetAction({
+      createUserAction({
         name: formData.get("name") as string,
         email: formData.get("email") as string,
         password: formData.get("password") as string,
@@ -25,17 +26,13 @@ export default function SnippetCreatePage() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3 className="font-bold m-3">Create a Snippet</h3>
+      <h1 className="font-bold m-3">Create a User</h1>
       <div className="flex flex-col gap-4">
         <div className="flex gap-4">
           <label className="w-20" htmlFor="name">
             Name
           </label>
-          <input
-            name="name"
-            className="border rounded p-2 w-full"
-            id="name"
-          />
+          <input name="name" className="border rounded p-2 w-full" id="name" />
         </div>
 
         <div className="flex gap-4">
@@ -64,11 +61,7 @@ export default function SnippetCreatePage() {
           <label className="w-20" htmlFor="role">
             Role
           </label>
-          <input
-            name="role"
-            className="border rounded p-2 w-full"
-            id="role"
-          />
+          <input name="role" className="border rounded p-2 w-full" id="role" />
         </div>
 
         {formState.errorMessage && (
@@ -77,7 +70,7 @@ export default function SnippetCreatePage() {
           </div>
         )}
 
-        <button type="submit" className="bg-blue-200 p-2 rounded">
+        <button type="submit" className="bg-blue-200  p-2 border rounded mt-4">
           Create
         </button>
       </div>

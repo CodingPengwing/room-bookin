@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/db";
-import { editUser, deleteUser } from "@/actions/users";
+import { deleteUser } from "@/actions/users";
 
 interface UserPageProps {
   params: {
@@ -37,6 +37,25 @@ export default async function UserPage(props: UserPageProps) {
             <button className="bg-red-200 p-2 border rounded">Delete</button>
           </form>
         </div>
+      </div>
+      {/* make everything below editable in a form */}
+      <div className="m-4 space-y-2">
+        <p className="text-gray-700">
+          <span className="font-semibold">Email:</span> {user.email}
+        </p>
+        <p className="text-gray-700">
+          <span className="font-semibold">ID:</span> {user.id}
+        </p>
+        <p className="text-gray-700">
+          <span className="font-semibold">Created at:</span>{" "}
+          {user.createdAt.toISOString()}
+        </p>
+        <p className="text-gray-700">
+          <span className="font-semibold">Role:</span> {user.role}
+        </p>
+        <p className="text-gray-700">
+          <span className="font-semibold">Status:</span> {user.status}
+        </p>
       </div>
     </div>
   );
