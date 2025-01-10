@@ -28,8 +28,8 @@ import Transitions from "@/components/@extended/Transitions";
 import IconButton from "@/components/@extended/IconButton";
 
 import { ThemeDirection, ThemeMode } from "@/config";
-import useConfig from "@/hooks/useConfig";
-import useUser from "@/hooks/useUser";
+import useConfig from "@/components/hooks/useConfig";
+import useUser from "@/components/hooks/useUser";
 
 // assets
 import LogoutOutlined from "@ant-design/icons/LogoutOutlined";

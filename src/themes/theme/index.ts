@@ -15,8 +15,8 @@ import { ThemeMode } from "@/config";
 import { PalettesProps } from "@ant-design/colors";
 
 // types
-import { PaletteThemeProps } from "@/types/theme";
-import { PresetColor } from "@/types/config";
+import { PaletteThemeProps } from "@/components/types/theme";
+import { PresetColor } from "@/components/types/config";
 
 // ==============================|| PRESET THEME - THEME SELECTOR ||============================== //
 

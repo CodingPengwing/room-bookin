@@ -3,7 +3,7 @@ import { Theme } from "@mui/material/styles";
 import { CheckboxProps } from "@mui/material/Checkbox";
 
 // project import
-import getColors from "@/utils/getColors";
+import getColors from "@/components/utils/getColors";
 
 // assets
 import BorderOutlined from "@ant-design/icons/BorderOutlined";
@@ -11,7 +11,7 @@ import CheckSquareFilled from "@ant-design/icons/CheckSquareFilled";
 import MinusSquareFilled from "@ant-design/icons/MinusSquareFilled";
 
 // types
-import { ExtendedStyleProps } from "@/types/extended";
+import { ExtendedStyleProps } from "@/components/types/extended";
 
 // ==============================|| RADIO - COLORS ||============================== //
 

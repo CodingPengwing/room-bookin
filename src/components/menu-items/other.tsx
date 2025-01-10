@@ -6,7 +6,7 @@ import QuestionOutlined from "@ant-design/icons/QuestionOutlined";
 import StopOutlined from "@ant-design/icons/StopOutlined";
 
 // type
-import { NavItemType } from "@/types/menu";
+import { NavItemType } from "@/components/types/menu";
 
 // icons
 const icons = {

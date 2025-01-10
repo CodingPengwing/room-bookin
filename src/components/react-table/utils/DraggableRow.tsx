@@ -17,7 +17,7 @@ import IconButton from "@/components/@extended/IconButton";
 import DragOutlined from "@ant-design/icons/DragOutlined";
 
 // types
-import { TableDataProps } from "@/types/table";
+import { TableDataProps } from "@/components/types/table";
 
 // ==============================|| DRAGGABLE ROW ||============================== //
 

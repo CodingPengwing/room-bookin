@@ -1,11 +1,11 @@
 // material-ui
 import { Theme } from "@mui/material/styles";
-import { ColorProps } from "@/types/extended";
+import { ColorProps } from "@/components/types/extended";
 
 // project import
 import { ThemeMode } from "@/config";
-import getColors from "@/utils/getColors";
-import getShadow from "@/utils/getShadow";
+import getColors from "@/components/utils/getColors";
+import getShadow from "@/components/utils/getShadow";
 
 interface Props {
   variant: ColorProps;

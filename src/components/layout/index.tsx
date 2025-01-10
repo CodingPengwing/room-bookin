@@ -19,7 +19,7 @@ import HorizontalBar from "./Drawer/HorizontalBar";
 // import Breadcrumbs from '@/components/@extended/Breadcrumbs';
 
 import { MenuOrientation } from "@/config";
-import useConfig from "@/hooks/useConfig";
+import useConfig from "@/components/hooks/useConfig";
 // import { handlerDrawerOpen, useGetMenuMaster } from 'api/menu';
 
 // ==============================|| MAIN LAYOUT ||============================== //

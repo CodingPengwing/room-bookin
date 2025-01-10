@@ -4,7 +4,7 @@ import other from "./other";
 import pages from "./pages";
 
 // types
-import { NavItemType } from "@/types/menu";
+import { NavItemType } from "@/components/types/menu";
 import { bookingsNav, roomsNav, usersNav } from "./main";
 
 // ==============================|| MENU ITEMS ||============================== //

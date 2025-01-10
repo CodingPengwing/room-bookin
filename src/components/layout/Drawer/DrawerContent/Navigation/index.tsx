@@ -16,11 +16,11 @@ import NavGroup from "./NavGroup";
 import menuItem from "@/components/menu-items";
 
 import { HORIZONTAL_MAX_ITEM, MenuOrientation } from "@/config";
-import useConfig from "@/hooks/useConfig";
+import useConfig from "@/components/hooks/useConfig";
 // import { useGetMenuMaster } from "api/menu";
 
 // types
-import { NavItemType } from "@/types/menu";
+import { NavItemType } from "@/components/types/menu";
 
 // ==============================|| DRAWER CONTENT - NAVIGATION ||============================== //
 

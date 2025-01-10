@@ -6,7 +6,7 @@ import PhoneOutlined from "@ant-design/icons/PhoneOutlined";
 import RocketOutlined from "@ant-design/icons/RocketOutlined";
 
 // type
-import { NavItemType } from "@/types/menu";
+import { NavItemType } from "@/components/types/menu";
 
 // icons
 const icons = { PhoneOutlined, RocketOutlined };

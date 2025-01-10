@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import ChromeOutlined from "@ant-design/icons/ChromeOutlined";
 
 // type
-import { NavItemType } from "@/types/menu";
+import { NavItemType } from "@/components/types/menu";
 
 // icons
 const icons = { ChromeOutlined };

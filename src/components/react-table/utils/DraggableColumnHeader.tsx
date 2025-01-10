@@ -7,7 +7,7 @@ import TableCell from "@mui/material/TableCell";
 // third-party
 import { useDroppable, useDraggable } from "@dnd-kit/core";
 import { Header, Table } from "@tanstack/react-table";
-import { TableDataProps } from "@/types/table";
+import { TableDataProps } from "@/components/types/table";
 
 // ==============================|| DRAGGABLE COLUMN ||============================== //
 

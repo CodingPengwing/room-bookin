@@ -8,10 +8,15 @@ import defaultConfig, {
   ThemeDirection,
   ThemeMode,
 } from "@/config";
-import useLocalStorage from "@/hooks/useLocalStorage";
+import useLocalStorage from "@/components/hooks/useLocalStorage";
 
 // types
-import { CustomizationProps, FontFamily, I18n, PresetColor } from "@/types/config";
+import {
+  CustomizationProps,
+  FontFamily,
+  I18n,
+  PresetColor,
+} from "@/components/types/config";
 
 // initial state
 const initialState: CustomizationProps = {

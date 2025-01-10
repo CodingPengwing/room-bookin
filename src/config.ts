@@ -2,7 +2,7 @@
 import { Public_Sans } from "next/font/google";
 
 // types
-import { DefaultConfigProps } from "@/types/config";
+import { DefaultConfigProps } from "@/components/types/config";
 
 // ==============================|| THEME CONSTANT ||============================== //
 

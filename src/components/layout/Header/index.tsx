@@ -17,7 +17,7 @@ import {
   MenuOrientation,
   ThemeMode,
 } from "@/config";
-import useConfig from "@/hooks/useConfig";
+import useConfig from "@/components/hooks/useConfig";
 // import { handlerDrawerOpen, useGetMenuMaster } from "api/menu";
 
 // assets

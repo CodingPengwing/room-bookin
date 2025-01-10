@@ -25,7 +25,7 @@ import SimpleBar from "@/components/third-party/SimpleBar";
 import Transitions from "@/components/@extended/Transitions";
 
 import { MenuOrientation } from "@/config";
-import useConfig from "@/hooks/useConfig";
+import useConfig from "@/components/hooks/useConfig";
 // import { handlerHorizontalActiveItem, useGetMenuMaster } from "api/menu";
 
 // assets
@@ -34,7 +34,7 @@ import GroupOutlined from "@ant-design/icons/GroupOutlined";
 import RightOutlined from "@ant-design/icons/RightOutlined";
 
 // types
-import { NavItemType } from "@/types/menu";
+import { NavItemType } from "@/components/types/menu";
 
 // ==============================|| NAVIGATION - LIST GROUP ||============================== //
 

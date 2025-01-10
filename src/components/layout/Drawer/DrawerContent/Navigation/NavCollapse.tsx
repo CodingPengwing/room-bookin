@@ -26,7 +26,7 @@ import SimpleBar from "@/components/third-party/SimpleBar";
 import Transitions from "@/components/@extended/Transitions";
 
 import { MenuOrientation, ThemeMode } from "@/config";
-import useConfig from "@/hooks/useConfig";
+import useConfig from "@/components/hooks/useConfig";
 // import { handlerActiveItem, useGetMenuMaster } from "api/menu";
 
 // assets
@@ -36,7 +36,7 @@ import UpOutlined from "@ant-design/icons/UpOutlined";
 import RightOutlined from "@ant-design/icons/RightOutlined";
 
 // types
-import { NavItemType } from "@/types/menu";
+import { NavItemType } from "@/components/types/menu";
 
 type VirtualElement = {
   getBoundingClientRect: () => ClientRect | DOMRect;

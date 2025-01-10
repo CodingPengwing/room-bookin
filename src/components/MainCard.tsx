@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import { ThemeMode } from "@/config";
 
 // types
-import { KeyedObject } from "@/types/root";
+import { KeyedObject } from "@/components/types/root";
 
 // header style
 const headerSX = {

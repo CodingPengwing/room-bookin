@@ -1,6 +1,6 @@
 import "../globals.css";
 import Providers from "@/app/providers";
-import DashboardLayout from "@/layout";
+import DashboardLayout from "@/components/layout";
 import { geistMono, geistSans } from "../layout";
 
 export default function RootLayout({

@@ -12,8 +12,8 @@ import FullScreen from "./FullScreen";
 import MobileSection from "./MobileSection";
 
 import { MenuOrientation } from "@/config";
-import useConfig from "@/hooks/useConfig";
-import DrawerHeader from "@/layout/Drawer/DrawerHeader";
+import useConfig from "@/components/hooks/useConfig";
+import DrawerHeader from "@/components/layout/Drawer/DrawerHeader";
 
 // ==============================|| HEADER - CONTENT ||============================== //
 

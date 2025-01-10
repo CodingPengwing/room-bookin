@@ -20,7 +20,7 @@ import Dot from "@/components/@extended/Dot";
 import IconButton from "@/components/@extended/IconButton";
 
 import { MenuOrientation, ThemeMode, NavActionType } from "@/config";
-import useConfig from "@/hooks/useConfig";
+import useConfig from "@/components/hooks/useConfig";
 // import {
 //   handlerHorizontalActiveItem,
 //   handlerActiveItem,
@@ -29,7 +29,7 @@ import useConfig from "@/hooks/useConfig";
 // } from "api/menu";
 
 // types
-import { LinkTarget, NavItemType } from "@/types/menu";
+import { LinkTarget, NavItemType } from "@/components/types/menu";
 
 // ==============================|| NAVIGATION - LIST ITEM ||============================== //
 

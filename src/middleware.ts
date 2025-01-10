@@ -10,9 +10,9 @@ export default withAuth({
         return false;
       }
       // Only allow admin users to access /users
-      // if (req.nextUrl.pathname.startsWith("/users") && token.role !== "ADMIN") {
-      //   return false;
-      // }
+      if (req.nextUrl.pathname.startsWith("/users") && token.role !== "ADMIN") {
+        return false;
+      }
       return true;
     },
   },

@@ -7,7 +7,7 @@ import DrawerHeaderStyled from "./DrawerHeaderStyled";
 import Logo from "@/components/logo";
 
 import { MenuOrientation } from "@/config";
-import useConfig from "@/hooks/useConfig";
+import useConfig from "@/components/hooks/useConfig";
 
 // ==============================|| DRAWER HEADER ||============================== //
 
