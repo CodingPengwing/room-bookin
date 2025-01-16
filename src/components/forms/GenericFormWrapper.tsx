@@ -8,7 +8,6 @@ import Stack from "@mui/material/Stack";
 // project import
 import MainCard from "@/components/MainCard";
 import Typography from "@mui/material/Typography";
-import { useFormStatus } from "react-dom";
 
 const DEFAULT_WIDTH = 6;
 

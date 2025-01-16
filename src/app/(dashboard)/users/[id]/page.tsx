@@ -1,8 +1,11 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { db } from "@/db";
 import { deleteUser } from "@/actions/users";
 import MainCard from "@/components/MainCard";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Link from "next/link";
 
 interface UserPageProps {
   params: {
@@ -21,12 +24,12 @@ export default async function UserPage(props: UserPageProps) {
     return notFound();
   }
 
-  const deleteUserAction = deleteUser.bind(null, user.id);
+  const editUserAction = () => redirect(`/users/${user.id}/edit`);
 
   return (
     <div>
       <MainCard>
-        <div className="flex m-4 justify-between items-center">
+        {/* <div className="flex m-4 justify-between items-center">
           <h1 className="text-xl font-bold">{user.name}</h1>
           <div className="flex gap-4">
             <Link
@@ -39,8 +42,10 @@ export default async function UserPage(props: UserPageProps) {
               <button className="bg-red-200 p-2 border rounded">Delete</button>
             </form>
           </div>
-        </div>
-        {/* make everything below editable in a form */}
+        </div> */}
+        <Typography variant="h4" sx={{ mb: 4 }}>
+          {user.name}
+        </Typography>
         <div className="m-4 space-y-2">
           <p className="text-gray-700">
             <span className="font-semibold">Email:</span> {user.email}
@@ -59,6 +64,25 @@ export default async function UserPage(props: UserPageProps) {
             <span className="font-semibold">Status:</span> {user.status}
           </p>
         </div>
+        {/* <form action={editUserAction}> */}
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="right"
+          alignItems="center"
+          sx={{ mt: 8 }}
+        >
+          <Link
+            href={`/users/${user.id}/edit`}
+            // className="bg-blue-200 p-2 border rounded"
+          >
+            {/* Edit */}
+            <Button variant="contained" sx={{ textTransform: "none" }}>
+              Edit User
+            </Button>
+          </Link>
+        </Stack>
+        {/* </form> */}
       </MainCard>
     </div>
   );
