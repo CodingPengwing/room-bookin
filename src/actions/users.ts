@@ -29,7 +29,7 @@ export async function createUser(
 
   // Redirect the user back to the root route
   revalidatePath(`/users`);
-  redirect("/users");
+  return { completed: true, errorMessage: "" };
 }
 
 export async function editUser(
@@ -50,12 +50,13 @@ export async function editUser(
 
   await db.user.update({ where: { id }, data: parsedData.data });
   revalidatePath(`/users/${id}`);
-  return { errorMessage: "" };
   // redirect(`/users/${id}`);
+  return { completed: true, errorMessage: "" };
 }
 
 export async function deleteUser(id: string) {
   await db.user.delete({ where: { id } });
   revalidatePath(`/users`);
+  // return { completed: true, errorMessage: "" };
   // redirect(`/users`);
 }

@@ -1,6 +1,7 @@
 import { date, z } from "zod";
 
 export type ActionState = {
+  completed?: boolean;
   errorMessage: string;
 };
 

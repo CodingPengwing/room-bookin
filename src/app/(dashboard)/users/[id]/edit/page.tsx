@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import UserEditForm from "@/components/forms/UserEditForm";
 import { getUserById } from "@/db/users";
+import UserForm from "@/components/forms/UserForm";
 
 interface UserEditPageProps {
   params: {
@@ -17,5 +18,6 @@ export default async function UserEditPage(props: UserEditPageProps) {
     return notFound();
   }
 
-  return <UserEditForm user={user} />;
+  // return <UserEditForm user={user} />;
+  return <UserForm variant="edit" user={user} />;
 }
