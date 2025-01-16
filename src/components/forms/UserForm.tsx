@@ -78,7 +78,7 @@ export default function UserForm({ variant, user }: UserFormProps) {
       } else {
         router.push(`/users/${user?.id}`);
       }
-    }, 2000);
+    }, 1500);
   }
 
   useEffect(() => {

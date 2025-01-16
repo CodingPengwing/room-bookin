@@ -11,7 +11,7 @@ import PlusOutlined from "@ant-design/icons/PlusOutlined";
 import { ReactTable } from "./ReactTable";
 import { Room } from "@prisma/client";
 import Link from "next/link";
-import RoomEditForm from "../forms/RoomForm";
+import RoomForm from "../forms/RoomForm";
 
 export interface RoomsTableProps {
   rooms: Room[];
@@ -96,19 +96,17 @@ export default function RoomsTable({ rooms }: RoomsTableProps) {
     router.push(`/rooms/new`);
   }, []);
 
-  function renderExpandedForm(data: Room) {
-    return <RoomEditForm variant="edit" room={data} />;
+  function renderExpandedForm(data: Room, onDelete: () => void) {
+    return <RoomForm variant="edit" room={data} onDelete={onDelete} />;
   }
 
   return (
     <ReactTable
-      {...{
-        data: rooms,
-        columns,
-        entityName: "Room",
-        handleAddEntity,
-        expandedRowRender: renderExpandedForm,
-      }}
+      data={rooms}
+      columns={columns}
+      entityName="Room"
+      handleAddEntity={handleAddEntity}
+      expandedRowRender={renderExpandedForm}
     />
   );
 }

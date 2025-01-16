@@ -61,7 +61,7 @@ interface Props<T extends object> {
   data: T[];
   columns: ColumnDef<T>[];
   handleAddEntity?: () => void;
-  expandedRowRender?: (data: T) => React.ReactNode;
+  expandedRowRender?: (data: T, onDelete: () => void) => React.ReactNode;
 }
 
 // ==============================|| REACT TABLE - LIST ||============================== //
@@ -260,7 +260,7 @@ export function ReactTable<T extends object>({
                         }}
                       >
                         <TableCell colSpan={row.getVisibleCells().length}>
-                          {expandedRowRender(row.original)}
+                          {expandedRowRender(row.original, row.toggleExpanded)}
                           {/* <ProductView data={row.original} /> */}
                         </TableCell>
                       </TableRow>

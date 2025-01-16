@@ -24,9 +24,10 @@ const WIDTH = 8;
 interface RoomFormProps {
   variant: "create" | "edit";
   room?: Room;
+  onDelete?: () => void;
 }
 
-export default function RoomForm({ variant, room }: RoomFormProps) {
+export default function RoomForm({ variant, room, onDelete }: RoomFormProps) {
   const router = useRouter();
 
   const [createFormState, createRoomAction] = useFormState(createRoom, {
@@ -70,10 +71,8 @@ export default function RoomForm({ variant, room }: RoomFormProps) {
     setTimeout(() => {
       if (variant === "create") {
         router.push(`/rooms`);
-      } else {
-        router.push(`/rooms/${room?.id}`);
       }
-    }, 2000);
+    }, 1500);
   }
 
   useEffect(() => {
@@ -92,6 +91,18 @@ export default function RoomForm({ variant, room }: RoomFormProps) {
     if (room) {
       await deleteRoom(room.id);
     }
+    openSnackbar({
+      open: true,
+      message: "Successfuly deleted room.",
+      variant: "alert",
+      alert: {
+        color: "primary",
+      },
+    } as SnackbarProps);
+
+    setTimeout(() => {
+      onDelete?.();
+    }, 1500);
   }
 
   return (

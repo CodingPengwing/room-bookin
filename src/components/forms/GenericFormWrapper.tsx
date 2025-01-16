@@ -55,9 +55,11 @@ export default function GenericFormWrapper({
               alignItems="center"
               sx={{ mt: 8 }}
             >
-              <Button variant="contained" color="error" onClick={onDelete}>
-                Delete {entityName}
-              </Button>
+              {onDelete && (
+                <Button variant="contained" color="error" onClick={onDelete}>
+                  Delete {entityName}
+                </Button>
+              )}
               <Button variant="outlined" color="secondary" onClick={onCancel}>
                 Cancel
               </Button>

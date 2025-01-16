@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 import { db } from "@/db";
 import {
   ActionState,
@@ -29,7 +29,8 @@ export async function createRoom(
 
   // Redirect the room back to the root route
   revalidatePath(`/rooms`);
-  redirect("/rooms");
+  return { completed: true, errorMessage: "" };
+  // redirect("/rooms");
 }
 
 export async function editRoom(
@@ -47,7 +48,7 @@ export async function editRoom(
 
   await db.room.update({ where: { id }, data: parsedData.data });
   revalidatePath(`/rooms`);
-  return { errorMessage: "" };
+  return { completed: true, errorMessage: "" };
   // redirect(`/rooms`);
 }
 
