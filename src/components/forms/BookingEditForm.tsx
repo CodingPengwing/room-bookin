@@ -28,6 +28,7 @@ export default function BookingEditForm({
     const formData = new FormData(event.currentTarget);
     startTransition(() => {
       editBookingAction({
+        id: booking.id,
         date: new Date(formData.get("date") as string),
         userId: formData.get("userId") as string,
         roomId: formData.get("roomId") as string,

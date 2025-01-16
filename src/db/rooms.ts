@@ -1,19 +1,21 @@
 import { db } from "@/db";
 
-export async function getAllRooms() {
+export async function getAllRooms(sortByCreation: boolean = true) {
   try {
-    return db.room.findMany({ orderBy: { createdAt: "desc" } });
+    return db.room.findMany({
+      orderBy: sortByCreation ? { createdAt: "desc" } : {},
+    });
   } catch (error) {
     console.log(error);
     throw new Error("Rooms not found");
   }
 }
 
-export async function getAllRoomsWithBookings() {
+export async function getAllRoomsWithBookings(sortByCreation: boolean = true) {
   try {
     return db.room.findMany({
       include: { bookings: true },
-      orderBy: { createdAt: "desc" },
+      orderBy: sortByCreation ? { createdAt: "desc" } : {},
     });
   } catch (error) {
     console.log(error);

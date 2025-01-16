@@ -1,8 +1,10 @@
 import { db } from "@/db";
 
-export async function getAllUsers() {
+export async function getAllUsers(sortByCreation: boolean = true) {
   try {
-    return db.user.findMany({ orderBy: { createdAt: "desc" } });
+    return db.user.findMany({
+      orderBy: sortByCreation ? { createdAt: "desc" } : {},
+    });
   } catch (error) {
     console.log(error);
     throw new Error("Users not found");

@@ -25,11 +25,12 @@ export default function BookingsTable({
   users,
   roomsWithBookings,
 }: BookingsTableProps) {
-  const router = useRouter();
+  // const router = useRouter();
 
-  const [modalState, setModalState] = useState(false);
-  const [modalType, setModalType] = useState<"create" | "edit">("create");
-  const [selectedBookingId, setSelectedBookingId] = useState<string>("");
+  const [modalTarget, setModalTarget] = useState<"new" | Booking | null>(null);
+  // const [modalState, setModalState] = useState(false);
+  // const [modalType, setModalType] = useState<"create" | "edit">("create");
+  // const [selectedBookingId, setSelectedBookingId] = useState<string>("");
 
   const columns = useMemo<ColumnDef<Booking>[]>(
     () => [
@@ -93,9 +94,7 @@ export default function BookingsTable({
                 sx={{ "&::after": { content: "none" } }}
                 // color={row.getIsExpanded() ? "error" : "secondary"}
                 onClick={() => {
-                  setModalType("edit");
-                  setSelectedBookingId(row.original.id);
-                  setModalState(true);
+                  setModalTarget(row.original);
                 }}
               >
                 {collapseIcon}
@@ -110,41 +109,46 @@ export default function BookingsTable({
 
   const handleAddEntity = useCallback(() => {
     // router.push(`/bookings/new`);
-    setModalType("create");
-    setSelectedBookingId("");
-    setModalState(true);
+    setModalTarget("new");
   }, []);
+
+  const sortedUsers = useMemo(
+    () => users.sort((a, b) => a.name.localeCompare(b.name)),
+    [users]
+  );
+
+  const sortedRooms = useMemo(
+    () => roomsWithBookings.sort((a, b) => a.name.localeCompare(b.name)),
+    [roomsWithBookings]
+  );
 
   return (
     <div className="relative">
       {/* Modal Overlay and Modal */}
       <div
-        className={`fixed justify-center items-center h-full inset-0 bg-black bg-opacity-50 z-50 ${modalState ? "block" : "hidden"}`}
-        onClick={() => setModalState(false)} // Close modal if background is clicked
+        className={`fixed justify-center items-center h-full inset-0 bg-black bg-opacity-50 z-50 ${modalTarget ? "block" : "hidden"}`}
+        onClick={() => setModalTarget(null)} // Close modal if background is clicked
       >
         <div className="flex justify-center items-center h-full">
           <div
             className="bg-white p-6 rounded-lg w-full max-w-lg"
             onClick={(e) => e.stopPropagation()}
           >
-            {modalType === "create" && (
+            {modalTarget === "new" && (
               <BookingCreateForm
-                users={users}
-                roomsWithBookings={roomsWithBookings}
-                onSubmit={() => setModalState(false)}
+                users={sortedUsers}
+                roomsWithBookings={sortedRooms}
+                onSubmit={() => setModalTarget(null)}
               />
             )}
-            {/* {modalType === "edit" && (
+            {modalTarget && typeof modalTarget === "object" && (
               <BookingEditForm
-                booking={
-                  bookings.find(
-                    (booking) => booking.id === selectedBookingId
-                  ) as Booking
-                }
-                users={users}
-                roomsWithBookings={roomsWithBookings}
+                booking={modalTarget}
+                users={sortedUsers}
+                roomsWithBookings={sortedRooms}
+                onSubmit={() => setModalTarget(null)}
               />
-            )} */}
+            )}
           </div>
         </div>
       </div>
