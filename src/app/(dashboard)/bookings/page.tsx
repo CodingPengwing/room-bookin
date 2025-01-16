@@ -10,7 +10,6 @@ export default async function BookingsPage() {
 
   return (
     <div>
-      <h1>Bookings Page</h1>
       <BookingsTable
         bookings={bookings}
         users={users}

@@ -6,7 +6,6 @@ export default async function RoomsPage() {
 
   return (
     <div>
-      <h1>Rooms Page</h1>
       <RoomsTable rooms={rooms} />
     </div>
   );

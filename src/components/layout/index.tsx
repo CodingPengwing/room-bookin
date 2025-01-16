@@ -20,6 +20,7 @@ import HorizontalBar from "./Drawer/HorizontalBar";
 
 import { MenuOrientation } from "@/config";
 import useConfig from "@/components/hooks/useConfig";
+import Breadcrumbs from "@/components/@extended/Breadcrumbs";
 // import { handlerDrawerOpen, useGetMenuMaster } from 'api/menu';
 
 // ==============================|| MAIN LAYOUT ||============================== //
@@ -67,7 +68,7 @@ export default function DashboardLayout({ children }: Props) {
             flexDirection: "column",
           }}
         >
-          {/* <Breadcrumbs /> */}
+          <Breadcrumbs />
           {children}
           <Footer />
         </Container>
