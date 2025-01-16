@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
@@ -11,8 +10,11 @@ import PlusOutlined from "@ant-design/icons/PlusOutlined";
 import { ReactTable } from "./ReactTable";
 import { Booking, Room, User } from "@prisma/client";
 import Link from "next/link";
-import BookingCreateForm from "../forms/BookingCreateForm";
-import BookingEditForm from "../forms/BookingEditForm";
+import BookingCreateForm from "@/components/forms/BookingCreateForm";
+import BookingEditForm from "@/components/forms/BookingEditForm";
+import { openSnackbar } from "@/components/state/snackbar";
+import { SnackbarProps } from "@/components/types/snackbar";
+import Snackbar from "../@extended/Snackbar";
 
 export interface BookingsTableProps {
   bookings: Booking[];
@@ -122,41 +124,61 @@ export default function BookingsTable({
     [roomsWithBookings]
   );
 
+  const handleSubmit = useCallback(() => {
+    openSnackbar({
+      open: true,
+      message: "Save successful!",
+      variant: "alert",
+      alert: {
+        color: "success",
+      },
+    } as SnackbarProps);
+    setModalTarget(null);
+  }, []);
+
   return (
-    <div className="relative">
-      {/* Modal Overlay and Modal */}
-      <div
-        className={`fixed justify-center items-center h-full inset-0 bg-black bg-opacity-50 z-50 ${modalTarget ? "block" : "hidden"}`}
-        onClick={() => setModalTarget(null)} // Close modal if background is clicked
-      >
-        <div className="flex justify-center items-center h-full">
-          <div
-            className="bg-white p-6 rounded-lg w-full max-w-lg"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {modalTarget === "new" && (
-              <BookingCreateForm
-                users={sortedUsers}
-                roomsWithBookings={sortedRooms}
-                onSubmit={() => setModalTarget(null)}
-              />
-            )}
-            {modalTarget && typeof modalTarget === "object" && (
-              <BookingEditForm
-                booking={modalTarget}
-                users={sortedUsers}
-                roomsWithBookings={sortedRooms}
-                onSubmit={() => setModalTarget(null)}
-              />
-            )}
+    <div>
+      <Snackbar />
+      <div className="relative">
+        {/* Modal Overlay and Modal */}
+        <div
+          className={`fixed justify-center items-center h-full inset-0 bg-black bg-opacity-50 z-50 ${modalTarget ? "block" : "hidden"}`}
+          onClick={() => setModalTarget(null)} // Close modal if background is clicked
+        >
+          <div className="flex justify-center items-center h-full">
+            <div
+              className="bg-white p-6 rounded-lg w-full max-w-lg"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {modalTarget === "new" && (
+                <BookingCreateForm
+                  users={sortedUsers}
+                  roomsWithBookings={sortedRooms}
+                  onSubmit={handleSubmit}
+                />
+              )}
+              {modalTarget && typeof modalTarget === "object" && (
+                <BookingEditForm
+                  booking={modalTarget}
+                  users={sortedUsers}
+                  roomsWithBookings={sortedRooms}
+                  onSubmit={handleSubmit}
+                />
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Table */}
-      <ReactTable
-        {...{ data: bookings, columns, entityName: "Booking", handleAddEntity }}
-      />
+        {/* Table */}
+        <ReactTable
+          {...{
+            data: bookings,
+            columns,
+            entityName: "Booking",
+            handleAddEntity,
+          }}
+        />
+      </div>
     </div>
   );
 }

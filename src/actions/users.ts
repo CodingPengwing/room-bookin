@@ -50,11 +50,12 @@ export async function editUser(
 
   await db.user.update({ where: { id }, data: parsedData.data });
   revalidatePath(`/users/${id}`);
-  redirect(`/users/${id}`);
+  return { errorMessage: "" };
+  // redirect(`/users/${id}`);
 }
 
 export async function deleteUser(id: string) {
   await db.user.delete({ where: { id } });
   revalidatePath(`/users`);
-  redirect(`/users`);
+  // redirect(`/users`);
 }
