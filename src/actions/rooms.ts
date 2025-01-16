@@ -47,11 +47,12 @@ export async function editRoom(
 
   await db.room.update({ where: { id }, data: parsedData.data });
   revalidatePath(`/rooms`);
-  redirect(`/rooms`);
+  return { errorMessage: "" };
+  // redirect(`/rooms`);
 }
 
 export async function deleteRoom(id: string) {
   await db.room.delete({ where: { id } });
   revalidatePath(`/rooms`);
-  redirect(`/rooms`);
+  // redirect(`/rooms`);
 }

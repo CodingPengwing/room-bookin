@@ -46,7 +46,7 @@ import {
   TablePagination,
 } from "./utils";
 
-import ProductView from "./ProductView";
+import ProductView from "../forms/ProductView";
 
 export interface LabelKeyObject {
   label: string;
@@ -61,6 +61,7 @@ interface Props<T extends object> {
   data: T[];
   columns: ColumnDef<T>[];
   handleAddEntity?: () => void;
+  expandedRowRender?: (data: T) => React.ReactNode;
 }
 
 // ==============================|| REACT TABLE - LIST ||============================== //
@@ -70,6 +71,7 @@ export function ReactTable<T extends object>({
   columns,
   entityName,
   handleAddEntity,
+  expandedRowRender,
 }: Props<T>) {
   const fuzzyFilter: FilterFn<T> = useCallback(
     (row, columnId, value, addMeta) => {
@@ -250,7 +252,7 @@ export function ReactTable<T extends object>({
                         </TableCell>
                       ))}
                     </TableRow>
-                    {row.getIsExpanded() && (
+                    {row.getIsExpanded() && expandedRowRender && (
                       <TableRow
                         sx={{
                           bgcolor: backColor,
@@ -258,7 +260,8 @@ export function ReactTable<T extends object>({
                         }}
                       >
                         <TableCell colSpan={row.getVisibleCells().length}>
-                          <ProductView data={row.original} />
+                          {expandedRowRender(row.original)}
+                          {/* <ProductView data={row.original} /> */}
                         </TableCell>
                       </TableRow>
                     )}

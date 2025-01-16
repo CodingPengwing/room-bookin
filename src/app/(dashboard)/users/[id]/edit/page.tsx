@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import UserEditForm from "@/components/forms/UserEditForm";
 import { getUserById } from "@/db/users";
 import UserForm from "@/components/forms/UserForm";
 

@@ -88,7 +88,11 @@ export default function UserForm({ variant, user }: UserFormProps) {
   }, [createFormState.completed, editFormState.completed]);
 
   function handleCancel() {
-    router.push(`/users`);
+    if (variant === "create") {
+      router.push(`/users`);
+    } else {
+      router.push(`/users/${user?.id}`);
+    }
   }
 
   async function handleDelete() {

@@ -40,51 +40,37 @@ export default function GenericFormWrapper({
         </Typography>
       )}
       <form onSubmit={onSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={width ?? DEFAULT_WIDTH} sm={width ?? DEFAULT_WIDTH}>
-            <MainCard spacing={2}>
-              <Grid container spacing={1} direction="column">
-                {children}
-                <Grid item xs={width ?? DEFAULT_WIDTH}>
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    justifyContent="right"
-                    alignItems="center"
-                    sx={{ mt: 8 }}
-                  >
-                    <Button
-                      variant="contained"
-                      color="error"
-                      onClick={onDelete}
-                    >
-                      Delete {entityName}
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      onClick={onCancel}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      sx={{ textTransform: "none" }}
-                    >
-                      Save {entityName}
-                    </Button>
-                  </Stack>
-                </Grid>
-              </Grid>
-            </MainCard>
+        <Grid item xs={width ?? DEFAULT_WIDTH} sm={width ?? DEFAULT_WIDTH}>
+          <Grid container spacing={2} direction="column">
+            {children}
+            {errorMessage && (
+              <div className="m-4 p-2 bg-red-200 border rounded border-red-400">
+                {errorMessage}
+              </div>
+            )}
+            <Stack
+              direction="row"
+              spacing={2}
+              justifyContent="right"
+              alignItems="center"
+              sx={{ mt: 8 }}
+            >
+              <Button variant="contained" color="error" onClick={onDelete}>
+                Delete {entityName}
+              </Button>
+              <Button variant="outlined" color="secondary" onClick={onCancel}>
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                type="submit"
+                sx={{ textTransform: "none" }}
+              >
+                Save {entityName}
+              </Button>
+            </Stack>
           </Grid>
         </Grid>
-        {errorMessage && (
-          <div className="my-2 p-2 bg-red-200 border rounded border-red-400">
-            {errorMessage}
-          </div>
-        )}
       </form>
     </MainCard>
   );
