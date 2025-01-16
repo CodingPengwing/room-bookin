@@ -80,13 +80,6 @@ export default function BookingsTable({
         },
       },
       {
-        header: "Booking ID",
-        accessorKey: "id",
-        meta: {
-          className: "cell-center",
-        },
-      },
-      {
         header: "Actions",
         meta: {
           className: "cell-center",
