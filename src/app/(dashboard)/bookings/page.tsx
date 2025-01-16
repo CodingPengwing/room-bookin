@@ -1,15 +1,12 @@
 import BookingsTable from "@/components/react-table/BookingsTable";
-import db from "@/db";
-import { Booking } from "@prisma/client";
+import { getAllBookings } from "@/db/bookings";
+import { getAllRoomsWithBookings } from "@/db/rooms";
+import { getAllUsers } from "@/db/users";
 
 export default async function BookingsPage() {
-  const bookings: Booking[] = await db.booking.findMany();
-  const users = await db.user.findMany();
-  const roomsWithBookings = await db.room.findMany({
-    include: {
-      bookings: true,
-    },
-  });
+  const bookings = await getAllBookings();
+  const users = await getAllUsers();
+  const roomsWithBookings = await getAllRoomsWithBookings();
 
   return (
     <div>

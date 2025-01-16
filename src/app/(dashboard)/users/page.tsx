@@ -1,8 +1,8 @@
-import { db } from "@/db";
 import UsersTable from "@/components/react-table/UsersTable";
+import { getAllUsers } from "@/db/users";
 
 export default async function UsersPage() {
-  const users = await db.user.findMany();
+  const users = await getAllUsers();
 
   return (
     <div>

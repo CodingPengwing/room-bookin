@@ -1,9 +1,8 @@
 import RoomsTable from "@/components/react-table/RoomsTable";
-import db from "@/db";
-import { Room } from "@prisma/client";
+import { getAllRooms } from "@/db/rooms";
 
 export default async function RoomsPage() {
-  const rooms: Room[] = await db.room.findMany();
+  const rooms = await getAllRooms();
 
   return (
     <div>

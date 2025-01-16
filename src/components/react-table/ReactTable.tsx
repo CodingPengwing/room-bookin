@@ -87,10 +87,11 @@ export function ReactTable<T extends object>({
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [sorting, setSorting] = useState<SortingState>([
-    {
-      id: "name",
-      desc: false,
-    },
+    // default sorting if needed
+    // {
+    //   id: "name",
+    //   desc: false,
+    // },
   ]);
   const [rowSelection, setRowSelection] = useState({});
   const [globalFilter, setGlobalFilter] = useState("");
